@@ -15,9 +15,9 @@ class Convocatoria extends CI_Controller {
 
 	public function index(){
 		$data=array(
-			'tituloPagina'		=>	'ADMINISTRACIÓN',
+			'tituloPagina'		=>	'CONVOCATORIA DOCENTE',
 			'template'			=>	$this->template,
-			'view'				=>	'admin/index'
+			'view'				=>	'index'
 		);
 		$this->load->view( $this->contenido, $data );
 	}

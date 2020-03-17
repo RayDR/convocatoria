@@ -97,6 +97,11 @@ class Model_convocatoria extends CI_Model {
 		return FALSE;
 	}
 
+	public function datatable_maestros(){
+		$query = $this->db->get('datos_maestros');
+		return $query->result_array();
+	}
+
 }
 
 /* End of file Model_convocatoria.php */

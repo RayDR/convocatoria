@@ -21,6 +21,8 @@
 		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/lib/MaterialDesign/css/materialdesignicons.css" media="all"/>
 		<!-- Datepicker CSS -->
 		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/lib/Datepicker/css/datepicker.css"/>
+		<!-- DataTables CSS -->
+		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/lib/DataTables/datatables.min.css"/>
 		<!------------------------- Scripts JS ------------------------->
 		<!-- jQuery Js -->
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/jQuery/jquery-3.4.1.js"></script>	<!-- Popper Js -->
@@ -29,6 +31,8 @@
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/Bootstrap-4.4.1/js/bootstrap.min.js"></script>
 		<!-- Datepicker Js -->
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/Datepicker/js/bootstrap-datepicker.js"></script>
+		<!-- DataTables Js -->
+		<script type="text/javascript" src="<?=base_url();?>sources/lib/DataTables/datatables.js"></script>
 
 
 		<!--------------- Estilos Globales Personalizados --------------->
