@@ -1,0 +1,10 @@
+
+@font-face {
+  font-family: HermannRegular;
+  src: url('Oswald/Oswald-Light.ttf');
+}
+
+body{
+  font-family: HermannRegular;
+}
+
