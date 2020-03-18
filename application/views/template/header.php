@@ -25,7 +25,8 @@
 		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/lib/DataTables/datatables.min.css"/>
 		<!------------------------- Scripts JS ------------------------->
 		<!-- jQuery Js -->
-		<script type="text/javascript" src="<?=base_url();?>sources/lib/jQuery/jquery-3.4.1.js"></script>	<!-- Popper Js -->
+		<script type="text/javascript" src="<?=base_url();?>sources/lib/JQuery/jquery-3.4.1.js"></script>	
+		<!-- Popper Js -->
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/Popper/popper.js"></script>
 		<!-- Bootstrap Core JS -->
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/Bootstrap-4.4.1/js/bootstrap.min.js"></script>
