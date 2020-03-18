@@ -14,6 +14,7 @@ class Convocatoria extends CI_Controller {
 	}
 
 	public function index(){
+		$this->session->sess_destroy();
 		$data=array(
 			'tituloPagina'		=>	'CONVOCATORIA DOCENTE',
 			'template'			=>	$this->template,
@@ -160,6 +161,7 @@ class Convocatoria extends CI_Controller {
 			if ( $maestro_id != -1 ){
 				$array = array(
 					'uid' 	=> 	$maestro_id,
+					'utipo' => 	'Estudiante',
 					'curp'	=>	$curp
 				);
 				

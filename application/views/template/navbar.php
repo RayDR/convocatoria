@@ -9,7 +9,7 @@
 		<div class="collapse navbar-collapse align-middle" id="menu">
 			<ul class="navbar-nav ml-auto mt-2 mt-md-0">
 				<li class="nav-item active">
-					<a id="salir" class="nav-link"><span class="mdi mdi-home-outline"> VOLVER A INICIO</span></a>
+					<a id="salir" class="nav-link"><span class="mdi mdi-home-outline"> INICIO</span></a>
 				</li>
 			</ul>
 		</div>

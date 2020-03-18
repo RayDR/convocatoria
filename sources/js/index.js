@@ -12,7 +12,7 @@ function fn_iniciar_sistema(){
 
 
 function fn_salir(){
-	jQuery.ajax({
+	$.ajax({
 	  url: url('Convocatoria/salir'),
 	  beforeSend: function(){
 	  	fn_loader();

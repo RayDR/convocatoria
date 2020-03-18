@@ -1,6 +1,6 @@
 
 <div class="container py-3">
-	<table id="tabla-maestros" style="width: 100%; text-align: center;">
+	<table id="tabla-maestros" class="table table-hover" style="width: 100%;">
 		<thead>
 			<tr>
 				<th>ID</th>
