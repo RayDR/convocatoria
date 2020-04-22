@@ -146,6 +146,16 @@ function fn_documento_cargado(){
 		}
 	});
 	
+	let labelHtml = `
+		<label class="text-muted" for="archivo">El documento no puede ser mayor de <strong>2 MBs (2048 KBs)</strong></label>
+	`;
+	if ( $(this).val() == 13 )
+		labelHtml = `
+			<label class="text-muted" for="archivo">El documento no puede ser mayor de <strong>8 MBs (8192 KBs)</strong></label>
+		`;
+
+	$("label[for*='archivo']").html( labelHtml );
+	
 }
 
 function fn_recargar_documentos(){
@@ -159,8 +169,10 @@ function fn_recargar_documentos(){
 		},
 		success: function(data, textStatus, xhr) {
 			data = JSON.parse(data);
-			var html = "";
-			$("#documentos_adjuntos").html(html);
+			var html = `
+				<div class="card-columns container" id="documentos_adjuntos"></div>
+			`;
+			$("#mostrar-documentos").html(html);
 			data.forEach( function(documento, index) {
 				let time = new Date().getTime();
 				let _url = 'sources/doctos/' + documento.curp + '/' + documento.archivo + '?' + time;
@@ -173,11 +185,12 @@ function fn_recargar_documentos(){
 								<strong>`+ documento.archivo +`</strong>
 							</a>
 						</p>
-						<p class="card-text">
-							<a class="card-link text-secondary" target="_blank" href="`+ url(_url, false) +`">
-								Ver el documento
-							</a>
-						</p>
+
+						<iframe
+							title="`+ documento.archivo +`" 
+							src="`+ url(_url, false) +`" 
+							frameborder="0"
+						></iframe>
 					</div>
 				</div>
 				`;

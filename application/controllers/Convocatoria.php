@@ -93,13 +93,14 @@ class Convocatoria extends CI_Controller {
 
 		if ( !file_exists( $path ) ) 
 		    mkdir( $path, 0777, true );
-		
-		$config['upload_path']   = $path;
-		$config['allowed_types'] = 'pdf';
-		$config['max_size']      = 2048;
-		$config['overwrite']     = TRUE;
 
 		$cve_doc = $this->Model_catalogos->get_tipo_documento( $this->input->post('documentos') );
+
+		$config['upload_path']   = $path;
+		$config['allowed_types'] = 'pdf';
+		$config['max_size']      = ($cve_doc == 'DCPT')? 8192 : 2048;
+		$config['overwrite']     = TRUE;
+		
 		if ( ! is_null($cve_doc) ){
 
 			$nombreArchivo = $curp."_".$cve_doc.'.pdf';
@@ -110,7 +111,6 @@ class Convocatoria extends CI_Controller {
 				'documento_id'			=> 	$this->input->post('documentos'),
 				'archivo'				=>  $nombreArchivo
 			);
-
 			$this->load->library( 'upload', $config );
 
 			if ( ! $this->upload->do_upload( 'archivo' ) ) {

@@ -97,6 +97,11 @@ class Model_convocatoria extends CI_Model {
 		return FALSE;
 	}
 
+	public function contar_documentos( $curp ){
+		$documentosTotales = $this->db->get_where('vw_documentos_subidos', array('curp' => $curp));
+		return $documentosTotales->num_rows();
+	}
+
 	public function datatable_maestros(){
 		$query = $this->db->get('datos_maestros');
 		return $query->result_array();

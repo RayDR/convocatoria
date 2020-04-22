@@ -8,9 +8,20 @@
 
 		<div class="collapse navbar-collapse align-middle" id="menu">
 			<ul class="navbar-nav ml-auto mt-2 mt-md-0">
+				<?php if($this->session->userdata('utipo') == 'Admin'): ?>
+					<li class="nav-item">
+						<a id="salir" class="nav-link"><span class="mdi mdi-home-outline"> VOLVER A INICIO</span></a>
+					</li>
+					<?php if( $this->session->userdata('uLogin') ): ?>
+						<li class="nav-item active">
+							<a href="<?=base_url('index.php/Administrador/salir')?>" class="nav-link"><span class="mdi mdi-logout"> SALIR</span></a>
+						</li>
+					<?php endif ?>
+				<?php else: ?>
 				<li class="nav-item active">
 					<a id="salir" class="nav-link"><span class="mdi mdi-home-outline"> INICIO</span></a>
 				</li>
+				<?php endif ?>
 			</ul>
 		</div>
 	</nav>

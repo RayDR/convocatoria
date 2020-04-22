@@ -26,8 +26,11 @@ class Administrador extends CI_Controller {
 	}
 
 	public function panel_administrador(){
-		if ( $this->session->userdata('utipo') != 'Admin' )
+		if ( $this->session->userdata('utipo') != 'Admin' ){
 			header("Location: ". base_url() . 'index.php/Convocatoria');
+			return;
+		}
+
 		$data=array(
 			'tituloPagina'		=>	'ADMINISTRACIÓN',
 			'template'			=>	$this->template,
@@ -41,7 +44,7 @@ class Administrador extends CI_Controller {
 	public function ingresar(){
 		$respuesta["exito"] = TRUE;
 		$password = $this->input->post('clave');
-		if ( $password == 'SeConvoca2020.')
+		if ( $password == 'Convoca_MS20.')
 			$this->_crear_session();
 		else
 			$respuesta["exito"] = FALSE;
@@ -49,18 +52,54 @@ class Administrador extends CI_Controller {
 		return;
 	}
 
-	public function datatable_maestros(){		
+	public function salir(){
+		$this->session->sess_destroy();
+		header("Location: ". base_url() . 'index.php/Administrador');
+	}
+
+	public function datatable_maestros(){
+		if ( $this->session->userdata('utipo') != 'Admin' ){
+			header("Location: ". base_url() . 'index.php/Convocatoria');
+			return;
+		}
 		$resultado = $this->Model_convocatoria->datatable_maestros();
 		print( json_encode($resultado) );
 		return;
 	}
 
+	public function preprarar_descarga_zip(){
+		if ( $this->session->userdata('utipo') != 'Admin' ){
+			header("Location: ". base_url() . 'index.php/Convocatoria');
+			return;
+		}
+
+		$curp = $this->input->post('curp');		
+		$respuesta["exito"] = FALSE;
+
+		// Validar que tenga documentos
+		if ( $this->Model_convocatoria->contar_documentos($curp) > 0 ){
+			$respuesta["exito"] = TRUE;
+		}
+		print( json_encode($respuesta) );
+		return;
+	}
+
 	public function descargar_zip($curp){
+		if ( $this->session->userdata('utipo') != 'Admin' ){
+			header("Location: ". base_url() . 'index.php/Convocatoria');
+			return;
+		}
+		
 		$this->_generar_zip($curp);
 	}
 
 	/** ************** FUNCIONES PRIVADAS ************* **/
 	private function _generar_zip($curp){
+		if ( $this->session->userdata('utipo') != 'Admin' ){
+			header("Location: ". base_url() . 'index.php/Convocatoria');
+			return;
+		}
+		
 		$exito = array('exito' => FALSE);
 		$rutaZip = "sources/doctos/";
 		$directorio = $rutaZip . $curp . '/';
@@ -93,7 +132,8 @@ class Administrador extends CI_Controller {
 	// Acceder como administrador
 	private function _crear_session(){
 		$array = array(
-			'utipo' => 	'Admin'
+			'utipo' 	=> 'Admin',
+			'uLogin'	=>	TRUE
 		);
 		
 		$this->session->set_userdata( $array );

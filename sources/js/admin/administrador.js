@@ -6,6 +6,8 @@ $(document).ready(function($) {
 	$("#salir_admin").click(fn_salir_admin);
 });
 
+$(document).off('click', "#descargar_zip").on('click', "#descargar_zip", fn_respuesta_descarga);
+
 function cargar_datatable(){
 	dt = $('#tabla-maestros').DataTable({
 		scrollX: true,
@@ -15,9 +17,9 @@ function cargar_datatable(){
 		},
 		columns: [
 			{ 
-            	data: 'dato_maestro_id',
-            	visible: false
-            },
+         	data: 'dato_maestro_id',
+         	visible: false
+         },
 			{ data: 'curp' },
 			{ 
 				data: null,
@@ -37,7 +39,8 @@ function cargar_datatable(){
 				data: null,
 				orderable: false,
 				render: function(data){
-					let html = '<a href="'+ url('Administrador/descargar_zip') +'/'+ data.curp +'" target="_blank" class="mdi mdi-download lead "></a>';
+					//let html = '<a href="'+ url('Administrador/descargar_zip') +'/'+ data.curp +'" target="_blank" class="mdi mdi-download lead"></a>';
+					let html = `<span id="descargar_zip" class="mdi mdi-download lead text-primary" data-curp="` + data.curp + `"></span>`;
 					return html;
 				}
 			},
@@ -45,9 +48,29 @@ function cargar_datatable(){
 		language: {
 			url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
 		}
-	}).columns.adjust();
+	});
 }
 
 function fn_salir_admin(){
+	
+}
+
+
+function fn_respuesta_descarga(){
+	var dataCurp = $(this).data('curp');
+	console.log(dataCurp);
+	$.ajax({
+		url: url('Administrador/preprarar_descarga_zip'),
+		type: 'POST',
+		data: { 'curp': dataCurp },
+		success: function(data, textStatus, xhr) {
+			data = JSON.parse(data);
+			if( data.exito ){
+				window.open( url('Administrador/descargar_zip/' + dataCurp ),'_blank')
+			} else {
+				modal("SIN DOCUMENTOS", 'Este docente no ha cargado ningún documento.' );
+			}
+		}
+	});
 	
 }

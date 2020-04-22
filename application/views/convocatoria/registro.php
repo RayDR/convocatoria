@@ -56,6 +56,7 @@
 
 					<div class="form-row mt-4">
 						<div class="input-group col-md-8">
+							<label><a href="https://pdf.io/es/compress/" target="_blank">¿Cómo comprimir mis PDF si pesan demasiado?</a></label>
 							<div class="form-group">
 								<div class="custom-file">
 									<input type="file" class="custom-file-input" id="archivo" name="archivo" accept="application/pdf">
@@ -76,7 +77,7 @@
 			</fieldset>
 		</div>
 		<div class="card-footer">
-			<fieldset>
+			<fieldset id="mostrar-documentos">
 				<?php if( sizeof( $documentos ) > 0 ): ?>
 					<legend>
 						Documentos Adjuntos
@@ -104,11 +105,12 @@
 											<strong><?=$nombre?></strong>
 										</a>
 									</p>
-									<p class="card-text">
-										<a class="card-link text-secondary" target="_blank" href="<?=$path?>">
-											Ver el documento
-										</a>
-									</p>
+									<iframe
+										title="<?=$nombre?>" 
+										src="<?=$path?>"
+										height="100%" 
+										width="100%"
+									></iframe>
 								</div>
 								<div class="card-footer">
 									<small class="text-muted">

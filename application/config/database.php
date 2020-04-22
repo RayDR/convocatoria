@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '10.57.18.80',
+	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => '1q2w3e4r5t.',
+	'password' => '120517rys',
 	'database' => 'convocatoria_docente',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
