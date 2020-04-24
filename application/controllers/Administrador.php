@@ -17,6 +17,7 @@ class Administrador extends CI_Controller {
 
 	public function index(){
 		$this->session->sess_destroy();
+		$this->session->set_userdata( array('mAdmin' => TRUE) );
 		$data=array(
 			'tituloPagina'		=>	'ADMINISTRACIÓN',
 			'template'			=>	$this->template,
@@ -110,13 +111,34 @@ class Administrador extends CI_Controller {
 		}
 		else {
 			$zip = new ZipArchive;
-			if($zip -> open($rutaZip . $nombreZip, ZipArchive::CREATE ) === TRUE) {
-				$dir = opendir($directorio); 
-				while($file = readdir($dir)) { 
-					if(is_file($directorio.$file)) { 
-						$zip -> addFile($directorio.$file, $file); 
-					} 
-				} 
+			if($zip -> open($rutaZip . $nombreZip, (ZipArchive::CREATE | ZipArchive::OVERWRITE)  ) === TRUE) {
+				// Agrega el directorio completo al zip
+				// $dir = opendir($directorio); 
+				// while($file = readdir($dir)) { 
+				// 	if(is_file($directorio.$file)) { 
+				// 		$zip -> addFile($directorio.$file, $file); 
+				// 	} 
+				// }
+				$documentos_curp = $this->Model_catalogos->get_documentos_curp($curp);
+				if ( $documentos_curp != null ){
+					// Crear Directorios
+					foreach ($documentos_curp as $docto) {
+						$zip->addEmptyDir( $docto["descripcion_clasif"] );
+					}
+					// Asignar archivos a directorios
+					$curr_dir = "";
+					foreach ($documentos_curp as $docto) {
+						$curr_dir = $docto["descripcion_clasif"];
+						$rutaArchivo = $directorio . $docto["archivo"];
+						if( file_exists( $rutaArchivo ) ){
+							$rutaArchivoZip =  $curr_dir . "/" . $docto["archivo"];
+							$zip -> addFile( $rutaArchivo, $rutaArchivoZip ); 
+						} 
+					}
+				}else{
+					$zip ->close();
+					return FALSE; 
+				}
 				$zip ->close(); 
 			}
 		}

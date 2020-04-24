@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Model_catalogos extends CI_Model {
 
 	public function get_tipos_documentos(){
+		$this->db->order_by('descripcion_clasif', 'desc');
 		return $this->db->get('vw_doctos_digitales')->result_array();
 	}
 
@@ -17,6 +18,13 @@ class Model_catalogos extends CI_Model {
 			return $documentos->row('cve_documento');
 
 		return NULL;
+	}
+
+	public function get_documentos_curp($curp){
+		$this->db->where('curp', $curp);
+		$this->db->order_by('descripcion', 'desc');
+		$condicion = array('curp'	=> $curp);
+		return $this->db->get_where('vw_documentos_subidos', $condicion)->result_array();
 	}
 
 }

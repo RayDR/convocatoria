@@ -4,6 +4,9 @@ function fn_iniciar_sistema(){
 	fn_loader(false);
 
 	$("#salir").click(fn_salir);
+
+	$('[data-toggle="popover"]').popover();
+	$('[data-toggle="tooltip"]').tooltip();
 }
 
 /* ******************************************************************* 

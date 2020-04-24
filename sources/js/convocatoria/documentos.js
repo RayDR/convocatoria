@@ -1,3 +1,4 @@
+var ultima_seleccion = null;
 $(document).ready(function() {
 	window.scrollTo(0, 0);
 
@@ -13,6 +14,7 @@ $(document).ready(function() {
 
 	var file = "";
 
+	$("#documentos").select2();
 	$('#documentos').change(fn_documento_cargado);
 
 	$('.custom-file-input').on('change', function() {
@@ -38,6 +40,16 @@ $(document).ready(function() {
 	});
 
 	$(".datos").blur(fn_actualiza_datos);
+
+	$("#sede").multiSelect();
+
+	if ( datosSedes != null )
+		datosSedes = datosSedes.split(',');
+
+	sedesSelect = datosSedes;
+	ultima_seleccion = sedesSelect;
+	$("#sede").multiSelect('select', sedesSelect);
+	$("#sede").change(fn_seleccion_sede);
 });
 
 function fn_carga_documento() {
@@ -92,7 +104,7 @@ function fn_actualiza_datos(){
 	if ( 
 		$("#nombres").val() == datos.nombres &&
 		$("#paterno").val() == datos.ap_paterno &&
-		$("#materno").val() == datos.ap_materno 
+		$("#materno").val() == datos.ap_materno
 	)
 		return;
 	else {
@@ -100,14 +112,13 @@ function fn_actualiza_datos(){
 		datos.ap_paterno = $("#paterno").val();
 		datos.ap_materno = $("#materno").val();
 	}
-
 	$.ajax({
 		url: url('Convocatoria/actualiza_datos'),
 		type: 'POST',
 		data: { 
-			nombres: $("#nombres").val(),
-			paterno: $("#paterno").val(),
-			materno: $("#materno").val()
+			nombres: datos.nombres,
+			paterno: datos.ap_paterno,
+			materno: datos.ap_materno
 		},
 		success: function(data, textStatus, xhr) {
 			input.addClass('is-valid');
@@ -149,7 +160,7 @@ function fn_documento_cargado(){
 	let labelHtml = `
 		<label class="text-muted" for="archivo">El documento no puede ser mayor de <strong>2 MBs (2048 KBs)</strong></label>
 	`;
-	if ( $(this).val() == 13 )
+	if ( $(this).val() == 12 )
 		labelHtml = `
 			<label class="text-muted" for="archivo">El documento no puede ser mayor de <strong>8 MBs (8192 KBs)</strong></label>
 		`;
@@ -199,4 +210,58 @@ function fn_recargar_documentos(){
 		}
 	});
 	
+}
+
+function fn_seleccion_sede(){
+	let domicilio = $(this).children("option:selected").data("domicilio");
+	$("#domicilio").html( "<small><strong>Domicilio: </strong>" + domicilio + "</small>" );
+
+	if ( $(this).val().length > 4 ){
+		let temp = ultima_seleccion;
+		$(this).multiSelect('deselect_all');
+		$(this).multiSelect('refresh');
+		$(this).multiSelect('select', temp);
+
+		$("#sede").addClass('is-invalid');
+		$("#sede").parent().find('.invalid-feedback').remove();
+		$("#sede").parent().append(
+			`<div class="invalid-feedback">
+				No es posible aplicar a más de cuatro sedes.
+			</div>`
+		);
+		return false;
+	}
+	else {
+		ultima_seleccion = $(this).val();
+		$("#sede").removeClass('is-invalid');
+		$("#sede").parent().find('.invalid-feedback').remove();
+	}
+	
+
+	if ( $(this).val() != null ){
+		if ( $(this).val().length > 0 ){
+			sedesSelect = $(this).val();
+			$.ajax({
+				url: url('Convocatoria/guardar_maestro_sede', true),
+				type: 'POST',
+				data: {
+					sedes: sedesSelect
+				},
+				beforeSend: function(){
+					fn_loader();
+				},
+				complete: function(xhr, textStatus) {
+					fn_loader(false);
+				},
+				success: function(data, textStatus, xhr) {
+					
+					$("#sede").removeClass('is-invalid');
+					$("#sede").parent().find('.invalid-feedback').remove();
+				},
+				error: function(xhr, textStatus, errorThrown) {
+					modal('ERR');
+				}
+			});
+		}
+	}
 }

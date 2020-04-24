@@ -30,7 +30,9 @@ class Convocatoria extends CI_Controller {
 			'view'				=>	'convocatoria/registro',
 			'tipos_documentos'	=>	$this->Model_catalogos->get_tipos_documentos(),
 			'datos'				=>	$this->Model_convocatoria->get_datos(),
-			'documentos'		=>	$this->Model_convocatoria->get_documentos()
+			'documentos'		=>	$this->Model_convocatoria->get_documentos(),
+			'sedes'				=>	$this->get_sedes(),
+			'sedes_escogidas'	=>	$this->get_sedes_escogidas()
 		);
 		$this->load->view( $this->contenido, $data );
 	}
@@ -108,8 +110,8 @@ class Convocatoria extends CI_Controller {
 			$config['file_name'] = $nombreArchivo;
 
 			$datos_documentos = array(
-				'documento_id'			=> 	$this->input->post('documentos'),
-				'archivo'				=>  $nombreArchivo
+				'documento_id'			=>		$this->input->post('documentos'),
+				'archivo'				=>		$nombreArchivo
 			);
 			$this->load->library( 'upload', $config );
 
@@ -147,6 +149,19 @@ class Convocatoria extends CI_Controller {
 
 	}
 
+	public function guardar_maestro_sede(){
+		$json["exito"] = FALSE;
+
+		$datos_maestro_sede = $this->input->post('sedes');
+
+		if ( $this->_registra_maestro_sede( $datos_maestro_sede ) ) 
+			$json["exito"] = TRUE;
+
+		header('Content-Type', 'application/json');
+		print( json_encode($json) );
+		return;
+	}
+
 	/** ************************* FUNCIONES PRIVADAS ************************* **/
 
 	// Registra al usuario y/o obtiene su ID
@@ -161,8 +176,9 @@ class Convocatoria extends CI_Controller {
 			if ( $maestro_id != -1 ){
 				$array = array(
 					'uid' 	=> 	$maestro_id,
-					'utipo' => 	'Estudiante',
-					'curp'	=>	$curp
+					'utipo' 	=> 	'Estudiante',
+					'curp'	=>		$curp,
+					'uLogin'	=> 	TRUE,
 				);
 				
 				$this->session->set_userdata( $array );		
@@ -190,9 +206,21 @@ class Convocatoria extends CI_Controller {
 		$this->Model_convocatoria->actualiza_datos( $datos );
 	}
 
+	private function _registra_maestro_sede($datos){
+		return $this->Model_convocatoria->registra_maestro_sede($datos);
+	}
+
 	private function _comprueba_documento(){
 		$documento = $this->input->post('documento');
 		return $this->Model_convocatoria->comprueba_documento($documento);
+	}
+
+	private function get_sedes(){
+		return $this->Model_convocatoria->get_sedes();
+	}
+
+	private function get_sedes_escogidas(){
+		return $this->Model_convocatoria->get_sedes_maestro();
 	}
 }	
 

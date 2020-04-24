@@ -4,8 +4,8 @@
 		<div class="card-header">	
 			<div class="row">
 				<div class="col-12 text-center">
-					<p class="text-secondary m-0 p-0" style="font-size: 3vmax;"><strong>BIENVENIDO AL REGISTRO DE</strong></p>
-					<p class="text-primary m-0 p-0" style="font-size: 3vmax;"><strong>DOCUMENTOS DOCENTE</strong></p>
+					<p class="text-secondary m-0 p-0" style="font-size: 3vmax;"><strong>BIENVENIDO AL REGISTRO Y VERIFICACIÓN</strong></p>
+					<p class="text-primary m-0 p-0" style="font-size: 3vmax;"><strong>DOCUMENTAL DE ASPIRANTES A DOCENTE</strong></p>
 				</div>
 			</div>
 		</div>

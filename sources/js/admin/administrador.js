@@ -4,6 +4,8 @@ $(document).ready(function($) {
 	cargar_datatable();
 
 	$("#salir_admin").click(fn_salir_admin);
+	$('[data-toggle="popover"]').popover();
+	$('[data-toggle="tooltip"]').tooltip();
 });
 
 $(document).off('click', "#descargar_zip").on('click', "#descargar_zip", fn_respuesta_descarga);
@@ -35,6 +37,26 @@ function cargar_datatable(){
 				}
 			},
 			{ data: "fecha_modificacion" },
+			{
+				data: null,
+				orderable: false,
+				render: function(data){
+					let sedes = "";
+					if ( data.sede_id.length != null){
+						let datos_sedes = data.sede.split(',');
+						datos_sedes.forEach( function(_sede, index) {
+							sede = _sede.split('-');
+							sedes += `<span 
+												class="badge badge-info mx-1"
+												data-toggle="tooltip" 
+												data-placement="left" 
+												title="`+ sede[1] +`"
+										>`+ sede[0] +`</span>`;
+						});
+					}
+					return sedes;
+				}
+			},
 			{ 
 				data: null,
 				orderable: false,
@@ -58,7 +80,6 @@ function fn_salir_admin(){
 
 function fn_respuesta_descarga(){
 	var dataCurp = $(this).data('curp');
-	console.log(dataCurp);
 	$.ajax({
 		url: url('Administrador/preprarar_descarga_zip'),
 		type: 'POST',

@@ -7,6 +7,7 @@
 				<th>CURP</th>
 				<th>Nombre Completo</th>
 				<th>Fecha Modificación</th>
+				<th>Sedes</th>
 				<th>Descargas</th>
 			</tr>
 		</thead>

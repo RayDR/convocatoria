@@ -39,14 +39,32 @@ class Model_convocatoria extends CI_Model {
 		return NULL;
 	}
 
-	public function actualiza_datos( $datos ){
+	public function actualiza_datos( $_datos ){
 		$datos = array(
-			'nombres'		=>	$datos['nombres'],
-			'ap_paterno'	=>	$datos['paterno'],
-			'ap_materno'	=>	$datos['materno']
+			'nombres'		=>	$_datos['nombres'],
+			'ap_paterno'	=>	$_datos['paterno'],
+			'ap_materno'	=>	$_datos['materno']
 		);
 		$this->db->where( 'dato_maestro_id', $this->session->userdata('uid') );
 		$this->db->update( 'datos_maestros', $datos );
+	}
+
+	public function registra_maestro_sede($datos){
+		$exito = true;
+		// Borrar si existen datos en maestros sedes		
+		$this->db->where('dato_maestro_id', $this->session->userdata('uid'));
+		$this->db->delete('maestros_sedes');
+		// Insertar datos sedes
+		foreach ($datos as $sede) {
+			$datos_maestro_sede = array(
+				'dato_maestro_id'	=>	$this->session->userdata('uid'),
+				'curp'				=>	$this->session->userdata('curp'),
+				'sede_id'			=>	$sede
+			);
+			if ( ! $this->db->insert('maestros_sedes', $datos_maestro_sede) )
+				$exito = false;
+		}
+		return $exito;
 	}
 
 	public function registrar_documento($datos){
@@ -80,10 +98,26 @@ class Model_convocatoria extends CI_Model {
 		}
 	}
 
+	public function get_sedes(){
+		return $this->db->get('sedes')->result_array();		
+	}
+
 	public function get_documentos(){
 		$curp = $this->session->userdata('curp');
 		$query = $this->db->get_where('vw_documentos_subidos', array('curp' => $curp));
 		return $query->result_array();
+	}
+
+	public function get_sedes_maestro(){
+		$condicion = array(
+			'dato_maestro_id'	=> $this->session->userdata('uid')
+		);
+
+		$datos =  $this->db->get_where('vw_datos_maestros_sede', $condicion);
+		if ( $datos->num_rows() > 0 )
+			return $datos->row("sede_id");
+
+		return null;
 	}
 
 	public function comprueba_documento($documento_id){
@@ -103,7 +137,7 @@ class Model_convocatoria extends CI_Model {
 	}
 
 	public function datatable_maestros(){
-		$query = $this->db->get('datos_maestros');
+		$query = $this->db->get('vw_datos_maestros_sede');
 		return $query->result_array();
 	}
 

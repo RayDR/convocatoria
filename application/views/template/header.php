@@ -23,6 +23,10 @@
 		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/lib/Datepicker/css/datepicker.css"/>
 		<!-- DataTables CSS -->
 		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/lib/DataTables/datatables.min.css"/>
+		<!-- Multiselect CSS -->
+		<link rel="stylesheet" type="text/css" href="<?= base_url('/sources/lib/Multiselect/css/multi-select.css') ?>"/>
+		<!-- Select2 CDN CSS -->
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
 		<!------------------------- Scripts JS ------------------------->
 		<!-- jQuery Js -->
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/JQuery/jquery-3.4.1.js"></script>	
@@ -34,7 +38,10 @@
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/Datepicker/js/bootstrap-datepicker.js"></script>
 		<!-- DataTables Js -->
 		<script type="text/javascript" src="<?=base_url();?>sources/lib/DataTables/datatables.js"></script>
-
+		<!-- Multiselect Js -->
+		<script type="text/javascript" src="<?= base_url('/sources/lib/Multiselect/js/jquery.multi-select.js') ?>"></script>
+		<!-- Select2 CDN JS -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.full.min.js"></script>
 
 		<!--------------- Estilos Globales Personalizados --------------->
 		<link rel="stylesheet" type="text/css" href="<?=base_url();?>sources/css/global.css"/>

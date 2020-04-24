@@ -1,7 +1,8 @@
 <?php $this->load->view('template/titulo'); ?>
-
 <script type="text/javascript">
 	var datos = <?php echo json_encode($datos, JSON_HEX_TAG); ?>;
+	var datosSedes = <?php echo json_encode($sedes_escogidas, JSON_HEX_TAG); ?>;
+	var sedesSelect = [];
 </script>
 <!-- SUBIR DOCUMENTOS -->
 <div class="container">
@@ -16,6 +17,8 @@
 						<label for="curp">CURP</label>
 						<input id="curp" type="text" class="form-control" readonly>
 					</div>
+				</div>				
+				<div class="form-row">
 					<div class="form-group col-lg-4">
 						<label for="nombres">Nombre(s)</label>
 						<input id="nombres" name="nombres" type="text" class="form-control datos" placeholder="Ingrese su(s) nombre(s)">
@@ -27,6 +30,21 @@
 					<div class="form-group col-lg-4">
 						<label for="materno">Apellido Materno</label>
 						<input id="materno" name="materno" type="text" class="form-control datos" placeholder="Ingrese su segundo apellido">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="sede">Sede de Aplicación</label>
+						<select class="form-control" id="sede" name="sede" multiple="multiple">
+							<?php foreach ( $sedes as $sede ): ?>
+								<option value="<?= $sede['sede_id'] ?>" data-domicilio="<?= $sede['domicilio'] ?>">
+									<?= $sede['num_sede'] ?> - <?= $sede['nombre'] ?>
+								</option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div class="form-group col-md-12 text-right">
+						<label id="domicilio" class="text-muted "></label>
 					</div>
 				</div>
 			</fieldset>
@@ -44,10 +62,22 @@
 							<label for="documentos">Tipo documento</label>
 							<select class="form-control" id="documentos" name="documentos">
 								<option disabled selected>Seleccione una opción</option>
+								<?php $encabezado = ""; $aInicio = TRUE; $bInicio = FALSE; ?>
 								<?php foreach ( $tipos_documentos as $documento ): ?>
-									<option value=" <?= $documento['documento_id'] ?> ">
-										<?= $documento['documento'] ?>
-									</option>
+									<?php 
+									if ( $encabezado != $documento["descripcion_clasif"] ): ?>
+										<?php
+											$bInicio = TRUE;
+											$encabezado = $documento["descripcion_clasif"]; 
+											if( $bInicio == TRUE && $aInicio == FALSE ){
+												echo '</optgroup>';
+											} else
+												$aInicio = FALSE;
+										?>
+										<optgroup label="<?=$encabezado;?>">
+									<?php endif; ?>
+
+									<option value="<?= $documento['documento_id']; ?>"><?= $documento['documento']; ?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>
