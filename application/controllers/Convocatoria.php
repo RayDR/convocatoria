@@ -59,10 +59,12 @@ class Convocatoria extends CI_Controller {
 
 			if ( $captcha->success ){
 				if ( ! is_null($curp) ){
-					if ( $this->_validar_curp( $curp ) ){
-
-						$this->_crear_session( $curp );
+					$renapo = $this->_validar_curp( $curp );
+					if ( $renapo ){
+						$renapo = ( $renapo['exito'] )? $renapo : NULL;
+						$this->_crear_session( $curp, $renapo );
 						$resultado["exito"] = TRUE;
+						$resultado["mensaje"] = $renapo;
 					} else
 						$resultado["mensaje"] = "La CURP ingresada no cumple con la estructura requerida.";
 				} else
@@ -165,18 +167,17 @@ class Convocatoria extends CI_Controller {
 	/** ************************* FUNCIONES PRIVADAS ************************* **/
 
 	// Registra al usuario y/o obtiene su ID
-	private function _crear_session($curp){
+	private function _crear_session($curp, $datos_maestro){
 		$exito = FALSE;
-
 		// Registrar si no existe
-		if ( $this->Model_convocatoria->registrar_curp( $curp ) ){
+		if ( $this->Model_convocatoria->registrar_curp( $curp, $datos_maestro ) ){
 			// Obtener ID
 			$maestro_id = $this->Model_convocatoria->get_maestro_id( $curp );
 
 			if ( $maestro_id != -1 ){
 				$array = array(
 					'uid' 	=> 	$maestro_id,
-					'utipo' 	=> 	'Estudiante',
+					'utipo' 	=> 	'Aspirante',
 					'curp'	=>		$curp,
 					'uLogin'	=> 	TRUE,
 				);
@@ -189,11 +190,12 @@ class Convocatoria extends CI_Controller {
 	}
 
 	private function _validar_curp($curp){
-		$exito = FALSE;
-		if( preg_match("/^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/", $curp ) )
-			$exito = TRUE;
+		$renapo = FALSE;
+		
+		$this->load->library('Renapo');
+      $renapo = $this->renapo->getCurp($curp);
 
-		return $exito;
+		return $renapo;
 	}
 
 	private function _guardar_datos_maestro(){

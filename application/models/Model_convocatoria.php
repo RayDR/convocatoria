@@ -3,19 +3,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_convocatoria extends CI_Model {
 
-	function registrar_curp($curp){
+	function registrar_curp($curp, $datos_renapo = NULL){
 		$exito = FALSE;
 		if ( is_null($curp) )
 			return $exito;
 
-		$qMaestro = $this->db->get_where('datos_maestros', array('curp'	=>	$curp));
+		$datos_maestro = array('curp'	=>	$curp);
+		if ( $datos_renapo != NULL ){
+			if ( is_array($datos_renapo) ){
+				$datos_maestro['ap_paterno'] 	= $datos_renapo['primer_apellido'];
+				$datos_maestro['ap_materno'] 	= $datos_renapo['segundo_apellido'];
+				$datos_maestro['nombres'] 		= $datos_renapo['nombre'];
+			}
+		}
 
-		if ( $qMaestro->num_rows() > 0 ) // El usuario existe
-			$exito = TRUE;
-		else {
-			// Se registra 
-			if ( $this->db->insert('datos_maestros', array( 'curp' => $curp ) ) )
+		$qMaestro = $this->db->get_where('datos_maestros', array('curp'	=>	$curp));
+		try {
+			if ( $qMaestro->num_rows() > 0 ) // El usuario existe
 				$exito = TRUE;
+			else {
+				// Se registra 
+				if ( $this->db->insert('datos_maestros', $datos_maestro ) )
+					$exito = TRUE;
+			}
+		} catch (Exception $e) {
+			$exito = FALSE;
 		}
 		return $exito;
 	}

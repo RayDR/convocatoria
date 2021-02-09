@@ -49,8 +49,7 @@ class Administrador extends CI_Controller {
 			$this->_crear_session();
 		else
 			$respuesta["exito"] = FALSE;
-		echo( json_encode($respuesta));
-		return;
+		return print( json_encode($respuesta) );
 	}
 
 	public function salir(){

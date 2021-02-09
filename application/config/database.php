@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '10.57.18.80',
 	'username' => 'root',
-	'password' => '120517rys',
-	'database' => 'convocatoria_docente',
+	'password' => 'SuperDba2020#',
+	'database' => 'convocatoria_ms',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
