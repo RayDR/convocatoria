@@ -12,7 +12,26 @@ $(document).off('click', "#descargar_zip").on('click', "#descargar_zip", fn_resp
 
 function cargar_datatable(){
 	dt = $('#tabla-maestros').DataTable({
-		scrollX: true,
+		bStateSave:         true,
+      sPaginationType:    "full_numbers",
+      scrollX:            true,
+      scrollY:            '70vh',
+      scrollCollapse:     true,
+      dom:                '<"row text-center mb-3"<"col-12"B>><"row d-flex justify-content-between"<"col-6"l><"col-6"f>>t<"mb-3"i>p',
+      buttons: [
+         {   
+            text        : 'Actualizar',
+            action      : function ( e, dt, node, config ) {
+            $(this).prop({disabled: true});
+            if( $.fn.dataTable.isDataTable( '#tabla-maestros' ) ){
+               dt.ajax.reload( null, false );
+               futil_toast('Tabla actualizada.');
+            } else 
+               $(this).prop({disabled: true});
+            }
+         },
+         { extend : 'excel' }
+      ],
 		ajax: {
 			url: url('Administrador/datatable_maestros'),
 			dataSrc: ''
@@ -62,7 +81,7 @@ function cargar_datatable(){
 				orderable: false,
 				render: function(data){
 					//let html = '<a href="'+ url('Administrador/descargar_zip') +'/'+ data.curp +'" target="_blank" class="mdi mdi-download lead"></a>';
-					let html = `<span id="descargar_zip" class="mdi mdi-download lead text-primary" data-curp="` + data.curp + `"></span>`;
+					let html = `<span id="descargar_zip" class="mdi mdi-download lead text-secondary texto-rojo" data-curp="` + data.curp + `"></span>`;
 					return html;
 				}
 			},
@@ -89,7 +108,7 @@ function fn_respuesta_descarga(){
 			if( data.exito ){
 				window.open( url('Administrador/descargar_zip/' + dataCurp ),'_blank')
 			} else {
-				modal("SIN DOCUMENTOS", 'Este docente no ha cargado ningún documento.' );
+				futil_modal("SIN DOCUMENTOS", 'Este docente no ha cargado ningún documento.' );
 			}
 		}
 	});

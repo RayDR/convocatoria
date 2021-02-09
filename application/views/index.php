@@ -4,8 +4,8 @@
 		<div class="card-header">	
 			<div class="row">
 				<div class="col-12 text-center">
-					<p class="text-secondary m-0 p-0" style="font-size: 3vmax;"><strong>BIENVENIDO AL REGISTRO Y VERIFICACIÓN</strong></p>
-					<p class="text-primary m-0 p-0" style="font-size: 3vmax;"><strong>DOCUMENTAL DE ASPIRANTES A DOCENTE</strong></p>
+					<p class="texto-dorado m-0 p-0" style="font-size: 3vmax;"><strong>BIENVENIDO AL REGISTRO Y VERIFICACIÓN</strong></p>
+					<p class="texto-rojo m-0 p-0" style="font-size: 3vmax;"><strong>DOCUMENTAL DE ASPIRANTES A DOCENTE</strong></p>
 				</div>
 			</div>
 		</div>
@@ -32,7 +32,7 @@
 			<div class="row mt-2">
 				<div class="col col-md-6 mx-auto">
 					<div class="form-group">
-						<button type="button" id="btnEntrar" name="btnEntrar" class="btn btn-primary btn-md">
+						<button type="button" id="btnEntrar" name="btnEntrar" class="btn btn-secondary boton-rojo btn-md">
 							Ingresar
 						</button>
 					</div>
@@ -60,12 +60,12 @@
 				if ( data.exito ){
 					window.location.href = url('Convocatoria/registro');
 				} else {
-					modal( "Lo sentimos", data.mensaje );
+					futil_modal( "Lo sentimos", data.mensaje );
 				}
 			},
 			error: function(xhr, textStatus, errorThrown) {
 				fn_loader(false);
-				modal("ERR");
+				futil_modal("ERR");
 			}
 		});
 		

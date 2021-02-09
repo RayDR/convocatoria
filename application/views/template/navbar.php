@@ -1,4 +1,4 @@
-	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<nav class="navbar navbar-expand-lg navbar-dark fondo-rojo">
 		
 		<a class="navbar-brand" href="<?=base_url()?>index.php"><img src="<?=base_url()?>sources/img/logo_blanco.png" alt="SETAB" style="max-width: 170px; height: auto;"></a>
 

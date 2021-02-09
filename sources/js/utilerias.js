@@ -13,7 +13,7 @@ var cargandoVista = false;
 */
 
 // Función de animación de carga del sistema
-function loader(opcion = true){
+function fn_loader(opcion = true){
   let loader = $("#loader");
   if ( opcion == true ){
     if ( loader.is(":visible") == false )

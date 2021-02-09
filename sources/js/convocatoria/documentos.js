@@ -27,12 +27,12 @@ $(document).ready(function() {
 		$("#documentos").removeClass('is-invalid');
 		$("#archivo").removeClass('is-invalid');
 		if ($("#documentos").val() == null || $("#documentos").val() == undefined ) {
-			modal('LO SENTIMOS',`Seleccione un <strong>Tipo de documento</strong> válido`, '',true);
+			futil_modal('LO SENTIMOS',`Seleccione un <strong>Tipo de documento</strong> válido`, '',true);
 			$("#documentos").addClass('is-invalid');
 			return;
 		}
 		if ( $("#archivo").val() == null || $("#archivo").val() == "" ){
-			modal('LO SENTIMOS',`Primero <strong>seleccione un archivo</strong>.`, '',true);
+			futil_modal('LO SENTIMOS',`Primero <strong>seleccione un archivo</strong>.`, '',true);
 			$("#archivo").addClass('is-invalid');
 			return;
 		}
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 	$(".datos").blur(fn_actualiza_datos);
 
-	$("#sede").multiSelect();
+	$("#sede").multiSelect({buttonWidth: '400px'});
 
 	if ( datosSedes != null )
 		datosSedes = datosSedes.split(',');
@@ -70,7 +70,7 @@ function fn_carga_documento() {
 			$("#cargar_docto").attr({disabled: false});
 			data = JSON.parse(data);
 			if ( data.exito ){
-				modal("CARGA EXITOSA", "Documento cargado exitosamente", '',true);
+				futil_modal("CARGA EXITOSA", "Documento cargado exitosamente", '',true);
 				$("#documentos").prop("selectedIndex", 0);
 				$("#documentos").parent().find('.valid-feedback').remove();
 				$("#documentos").removeClass('is-valid');
@@ -83,11 +83,11 @@ function fn_carga_documento() {
 				$("#documentos").parent().find('.valid-feedback').remove();
 				$("#documentos").addClass('is-invalid');
 				$("#archivo").addClass('is-invalid');
-				modal("FALLÓ LA CARGA DEL DOCUMENTO", data.mensaje, '',true );
+				futil_modal("FALLÓ LA CARGA DEL DOCUMENTO", data.mensaje, '',true );
 			}
 		},
 		error: function(xhr, textStatus, errorThrown) {
-			modal("ERR");
+			futil_modal("ERR");
 			$("#cargar_docto").attr({disabled: false});
 		},
 		complete: function(){
@@ -189,7 +189,7 @@ function fn_recargar_documentos(){
 				let _url = 'sources/doctos/' + documento.curp + '/' + documento.archivo + '?' + time;
 				html += `
 				<div class="card">
-					<div class="card-header bg-primary text-white">`+ documento.documento +`</div>
+					<div class="card-header fondo-rojo text-white">`+ documento.documento +`</div>
 					<div class="card-body">
 						<p class="card-title">
 							<a class="card-link" target="_blank" href="`+ url(_url, false) +`">
@@ -259,7 +259,7 @@ function fn_seleccion_sede(){
 					$("#sede").parent().find('.invalid-feedback').remove();
 				},
 				error: function(xhr, textStatus, errorThrown) {
-					modal('ERR');
+					futil_modal('ERR');
 				}
 			});
 		}

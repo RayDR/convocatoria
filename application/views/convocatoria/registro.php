@@ -100,7 +100,7 @@
 
 					<div class="form-row">
 						<div class="mt-4 py-2">
-							<button type="button" class="btn btn-block btn-primary" id="cargar" name="cargar">Cargar documento</button>
+							<button type="button" class="btn btn-block btn-secondary boton-rojo" id="cargar" name="cargar">Cargar documento</button>
 						</div>
 					</div>
 				</form>
@@ -126,7 +126,7 @@
 								$fecha 		= mdate($formato, $_fecha);
 							?>
 							<div class="card">
-								<div class="card-header bg-primary text-white">
+								<div class="card-header fondo-rojo text-white">
 									<?=$documento['documento']?>
 								</div>
 								<div class="card-body">

@@ -1,6 +1,6 @@
 <div class="container">
 
-	<div id="modal_login" class="modal fade text-primary" tabindex="-1" role="dialog">
+	<div id="modal_login" class="modal fade texto-rojo" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header text-center">
@@ -8,20 +8,19 @@
 					</button>
 				</div>
 				<div class="modal-body my-3">
-					<div id="mensaje" class="mb-4 text-info text-center lead">
+					<div id="mensaje" class="mb-4 texto-dorado text-center lead">
 					</div>
 					<div class="mb-4">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<i class="input-group-text mdi mdi-lock text-secondary"></i>
+								<i class="input-group-text mdi mdi-lock texto-dorado"></i>
 							</div>
 							<input type="password" id="clave" name="clave" class="form-control text-secondary">
 						</div>
 						<label for="clave">Contraseña de acceso</label>
 					</div>
-				</div>
-				<div class="modal-footer d-flex justify-content-center">
-					<button id="btn-ingresar" class="btn btn-outline-primary">Ingresar</button>
+
+					<button id="btn-ingresar" class="btn btn-outline-secondary">Ingresar</button>
 				</div>
 			</div>
 		</div>

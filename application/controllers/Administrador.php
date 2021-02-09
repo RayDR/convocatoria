@@ -45,7 +45,7 @@ class Administrador extends CI_Controller {
 	public function ingresar(){
 		$respuesta["exito"] = TRUE;
 		$password = $this->input->post('clave');
-		if ( $password == 'Convoca_MS20.')
+		if ( $password == 'Test2021.')
 			$this->_crear_session();
 		else
 			$respuesta["exito"] = FALSE;

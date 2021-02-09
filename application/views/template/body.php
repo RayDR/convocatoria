@@ -16,8 +16,19 @@
 	<!-- Fin Modal-mensajes -->
 
 	<!-- Loader -->
-	<div id="loader-background"></div>
-	<div id="loader"></div>
+	<div id="loader" class="loader-background">
+		<div class="loader">
+			<div class="loader--dot"></div>
+			<div class="loader--dot"></div>
+			<div class="loader--dot"></div>
+			<div class="loader--dot"></div>
+			<div class="loader--dot"></div>
+			<div class="loader--dot"></div>
+			<div class="loader--text"></div>
+		</div>
+	</div>
+	<div id="notificaciones" style="position: fixed; top: 10px; right: 10px; z-index: 100;">
+</div>
 	<!-- Fin Loader -->
 	
 	<!-- URL Web -->
@@ -25,6 +36,11 @@
 	
 	<!-- Separador -->
 	<div id="separador" style="padding-bottom: 100px;">
+
+	<!-- Back To Top -->
+	<span class="back-to-top fa fa-arrow-circle-up" data-title="Volver arriba" data-toggle="tooltip" data-placement="left"></span>
+	<!-- Fin Back To Top -->
+	
 	<!-- Fin Separador -->
 <?php $this->load->view($template.'footer');?>
 	<script type="text/javascript" src="<?=base_url()?>sources/js/utilerias.js"></script>
