@@ -4,7 +4,7 @@
 <body>
 <?php $this->load->view($template.'navbar'); ?>
 	<!-- Fin Encabezados/Menú -->
-	<h1 style="display: none">Proceso de Selección para la Admisión en Educación Media Superior Ciclo Escolar 2020-2021</h1>
+	<h1 style="display: none">Proceso de Selección para la Admisión en Educación Media Superior Ciclo Escolar <?=date("Y");?>-<?= date("Y") + 1;?></h1>
 	<!-- Vista dinámica -->
 	<div id="ajax_html">
 		<?php $this->load->view($view);?>

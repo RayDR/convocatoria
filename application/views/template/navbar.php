@@ -2,7 +2,7 @@
 		
 		<a class="navbar-brand" href="<?=base_url()?>index.php"><img src="<?=base_url()?>sources/img/logo_blanco.png" alt="SETAB" style="max-width: 170px; height: auto;"></a>
 
-		<a class="lead text-white nav-link" href="<?=base_url()?>index.php"><small>Proceso de Selección para la Admisión en Educación Media Superior Ciclo Escolar 2020-2021</small></a>
+		<a class="lead text-white nav-link" href="<?=base_url()?>index.php"><small>Proceso de Selección para la Admisión en Educación Media Superior Ciclo Escolar <?=date("Y");?>-<?= date("Y") + 1;?></small></a>
 		
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Ocultar navegación">
 			<span class="navbar-toggler-icon"></span>
