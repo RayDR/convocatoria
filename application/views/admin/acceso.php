@@ -1,5 +1,4 @@
 <div class="container">
-
 	<div id="modal_login" class="modal fade texto-rojo" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">

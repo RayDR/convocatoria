@@ -24,13 +24,15 @@ class Convocatoria extends CI_Controller {
 	}
 
 	public function registro(){
+		$curp = $this->session->userdata('curp');
 		$data=array(
 			'tituloPagina'		=>	'CARGA DE DOCUMENTOS',
 			'template'			=>	$this->template,
 			'view'				=>	'convocatoria/registro',
-			'tipos_documentos'	=>	$this->Model_catalogos->get_tipos_documentos(),
+			'curp'				=>	$curp,
+			'clasificaciones'	=>	$this->Model_catalogos->get_clasificaciones_documentos(),
 			'datos'				=>	$this->Model_convocatoria->get_datos(),
-			'documentos'		=>	$this->Model_convocatoria->get_documentos(),
+			'documentos'		=>	$this->Model_convocatoria->get_documentos_subidos($curp),
 			'sedes'				=>	$this->get_sedes(),
 			'sedes_escogidas'	=>	$this->get_sedes_escogidas()
 		);
@@ -39,6 +41,16 @@ class Convocatoria extends CI_Controller {
 
 	public function salir(){
 		$this->session->sess_destroy();
+	}
+
+	/** ************************* VISTAS AJAX ************************* **/
+
+	public function listado_documentos_clasificados($clasificacion){
+		$data=array(
+			'documentos'		=>	$this->_documentos_clasificados($clasificacion)
+		);
+		$this->load->view('convocatoria/ajax/listado_documentos', $data );
+		//return print_r($data);
 	}
 
 	/** ************************* FUNCIONES AJAX ************************* **/
@@ -75,8 +87,6 @@ class Convocatoria extends CI_Controller {
 		} else 
 			$resultado["mensaje"] = "Por favor, marque correctamente la casilla de verificación.";
 		
-
-		header('Content-Type', 'application/json');
 		print( json_encode($resultado) );
 		return;
 	}
@@ -102,6 +112,8 @@ class Convocatoria extends CI_Controller {
 
 		$config['upload_path']   = $path;
 		$config['allowed_types'] = 'pdf';
+		if ( $cve_doc == 'FAMA901501_FOTO_DIGITAL' )
+			$config['allowed_types'] = 'jpg';
 		$config['max_size']      = ($cve_doc == 'DCPT')? 8192 : 2048;
 		$config['overwrite']     = TRUE;
 		
@@ -143,12 +155,11 @@ class Convocatoria extends CI_Controller {
 		return;
 	}
 
-	public function get_documentos(){
-		$json = $this->Model_convocatoria->get_documentos();
-		header('Content-Type', 'application/json');
-		print( json_encode($json) );
-		return;
-
+	public function get_documentos_subidos(){
+		$curp = $this->session->userdata('curp');
+		if ( $curp )
+			$json = $this->Model_convocatoria->get_documentos_subidos($curp);
+		return print( json_encode($json) );
 	}
 
 	public function guardar_maestro_sede(){
@@ -190,10 +201,13 @@ class Convocatoria extends CI_Controller {
 	}
 
 	private function _validar_curp($curp){
-		$renapo = FALSE;
-		
-		$this->load->library('Renapo');
-      $renapo = $this->renapo->getCurp($curp);
+		$renapo = FALSE;		
+		try {			
+			$this->load->library('Renapo');
+      		$renapo = $this->renapo->getCurp($curp);
+		} catch (Exception $e) {			
+			$renapo = FALSE;		
+		}
 
 		return $renapo;
 	}
@@ -210,6 +224,11 @@ class Convocatoria extends CI_Controller {
 
 	private function _registra_maestro_sede($datos){
 		return $this->Model_convocatoria->registra_maestro_sede($datos);
+	}
+
+	private function _documentos_clasificados($clasificacion){
+		$documentos = $this->Model_convocatoria->get_documentos_clasificados($clasificacion);
+		return $documentos;
 	}
 
 	private function _comprueba_documento(){

@@ -7,11 +7,18 @@ class Renapo
     protected $ws;
 
     public function __construct(){
-      $this->ci =& get_instance();
-        $this->ws = new SoapClient("http://192.168.52.15:8084/wsCurpRenapoSE/services/ConsultaCurpMain?wsdl");
+        $this->ci =& get_instance();
+        try {
+            $this->ws = NULL;
+            $this->ws = new SoapClient("http://192.168.52.15:8084/wsCurpRenapoSE/services/ConsultaCurpMain?wsdl");
+        } catch ( SoapFault $e ) {
+            $this->ws = NULL;
+        }
     }
 
     public function getCurp( $strCurp ){
+        if ( is_null($this->ws) )
+            return array('exito' => FALSE);
         $json_result = array('exito' => TRUE);
         if ( ! is_null($strCurp) ) {
             $parametros     = array('strCurp' => $strCurp);
@@ -55,6 +62,8 @@ class Renapo
     }
 
     public function getDetalleCurp( $datos_ws ){
+        if ( is_null($this->ws) )
+            return array('exito' => FALSE);
         $json_result = array('exito' => TRUE);
         if ( ! is_null($datos_ws) ){
             if ( is_array($datos_ws) ){

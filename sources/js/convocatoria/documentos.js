@@ -13,6 +13,7 @@ $(document).ready(function() {
 	}
 
 	var file = "";
+	$('#clasificacion').change(fn_listado_doctos);
 
 	$("#documentos").select2();
 	$('#documentos').change(fn_documento_cargado);
@@ -51,6 +52,14 @@ $(document).ready(function() {
 	$("#sede").multiSelect('select', sedesSelect);
 	$("#sede").change(fn_seleccion_sede);
 });
+
+function fn_listado_doctos(){
+	var categoria = $(this).val();
+	var resultado = futil_muestra_vista( 
+						url(`Convocatoria/listado_documentos_clasificados/${categoria}`) );
+	if ( resultado )
+		$("#documentos").html(resultado);
+}
 
 function fn_carga_documento() {
 	$.ajax({
@@ -135,6 +144,7 @@ function fn_actualiza_datos(){
 
 function fn_documento_cargado(){
 	$(this).removeClass('is-invalid');
+	let clave = $(this).data('cve_documento');
 	$.ajax({
 		url: url('Convocatoria/comprobar_documento_cargado'),
 		type: 'POST',
@@ -146,7 +156,7 @@ function fn_documento_cargado(){
 				$("#documentos").parent().find('.valid-feedback').remove();
 				$("#documentos").parent().append(
 					`<div class="valid-feedback">
-						Este archivo ya ha sido cargado.
+						Este documento ya ha sido cargado, si lo sube nuevamente se <b>sobreescribirá</b> el documento anterior.
 					</div>`
 				);
 			}
@@ -171,7 +181,7 @@ function fn_documento_cargado(){
 
 function fn_recargar_documentos(){
 	$.ajax({
-		url: url('Convocatoria/get_documentos'),
+		url: url('Convocatoria/get_documentos_subidos'),
 		beforeSend: function(){
 			fn_loader();
 		},

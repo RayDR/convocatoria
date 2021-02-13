@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Model_catalogos extends CI_Model {
 
+	public function get_clasificaciones_documentos(){
+		$this->db->where('status', 1);
+		return $this->db->get('clasificaciones')->result_array();
+	}
+
 	public function get_tipos_documentos(){
 		$this->db->order_by('descripcion_clasif', 'desc');
 		return $this->db->get('vw_doctos_digitales')->result_array();

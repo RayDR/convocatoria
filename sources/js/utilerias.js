@@ -13,6 +13,17 @@ var cargandoVista = false;
 */
 
 // Función de animación de carga del sistema
+function loader(opcion = true){
+  let loader = $("#loader");
+  if ( opcion == true ){
+    if ( loader.is(":visible") == false )
+      loader.fadeIn('fast');
+  }
+  else 
+    loader.fadeOut(1500);  
+}
+
+// Función de animación de carga del sistema
 function fn_loader(opcion = true){
   let loader = $("#loader");
   if ( opcion == true ){
@@ -307,7 +318,7 @@ function futil_abrir_ventana(url, nombre, opciones = "", objetoVentana){
 }
 
 // Función que dada un URL o propiedad data, carga una vista modo ajax
-function futil_muestra_vista(G_URL, datos = [], SUFIX="_ajax"){
+function futil_muestra_vista(G_URL, datos = [], SUFIX=""){
   G_URL = ( $(this).data("url") )? $(this).data("url") + SUFIX : G_URL + SUFIX;
   var html = "";
   if ( G_URL ){

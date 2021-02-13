@@ -56,32 +56,27 @@
 						<strong>Adjuntar documentos digitales</strong>
 					</legend>
 
-					<div class="form-row">                        
+					<div class="form-row">
+						<div class="form-group col-md-8">
+
+							<label for="clasificacion">Tipo de promoción</label>
+							<select class="form-control" id="clasificacion" name="clasificacion">
+								<option disabled selected>Seleccione una opción</option>
+								<?php foreach ($clasificaciones as $key => $clasificacion): ?>
+									<option value="<?= $clasificacion["clasificacion_id"] ?>"><?= $clasificacion["descripcion"] ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-row">
 						<div class="form-group col-md-8">
 
 							<label for="documentos">Tipo documento</label>
 							<select class="form-control" id="documentos" name="documentos">
-								<option disabled selected>Seleccione una opción</option>
-								<?php $encabezado = ""; $aInicio = TRUE; $bInicio = FALSE; ?>
-								<?php foreach ( $tipos_documentos as $documento ): ?>
-									<?php 
-									if ( $encabezado != $documento["descripcion_clasif"] ): ?>
-										<?php
-											$bInicio = TRUE;
-											$encabezado = $documento["descripcion_clasif"]; 
-											if( $bInicio == TRUE && $aInicio == FALSE ){
-												echo '</optgroup>';
-											} else
-												$aInicio = FALSE;
-										?>
-										<optgroup label="<?=$encabezado;?>">
-									<?php endif; ?>
-
-									<option value="<?= $documento['documento_id']; ?>"><?= $documento['documento']; ?></option>
-								<?php endforeach; ?>
+								<option disabled selected>Seleccione una clasificación primero</option>
 							</select>
 						</div>
-						
 					</div>
 
 					<div class="form-row mt-4">
@@ -89,7 +84,7 @@
 							<label><a href="https://pdf.io/es/compress/" target="_blank">¿Cómo comprimir mis PDF si pesan demasiado?</a></label>
 							<div class="form-group">
 								<div class="custom-file">
-									<input type="file" class="custom-file-input" id="archivo" name="archivo" accept="application/pdf">
+									<input type="file" class="custom-file-input" id="archivo" name="archivo" accept="application/pdf,image/jpeg">
 
 									<label class="custom-file-label" for="archivo" data-browse="Selecionar archivo">No se ha seleccionado nigún archivo</label>
 								</div>

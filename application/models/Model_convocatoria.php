@@ -115,7 +115,17 @@ class Model_convocatoria extends CI_Model {
 	}
 
 	public function get_documentos(){
-		$curp = $this->session->userdata('curp');
+		$query = $this->db->get('documentos');
+		return $query->result_array();
+	}
+
+	public function get_documentos_clasificados($clasificacion){
+		$this->db->where('clasificacion_id', $clasificacion);
+		$query = $this->db->get('documentos');
+		return $query->result_array();
+	}
+
+	public function get_documentos_subidos($curp){
 		$query = $this->db->get_where('vw_documentos_subidos', array('curp' => $curp));
 		return $query->result_array();
 	}
