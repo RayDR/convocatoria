@@ -146,6 +146,7 @@ class Convocatoria extends CI_Controller {
 			$resultado["mensaje"] = 'Por favor, verifique el documento seleccionado.';
 			$resultado["exito"] = FALSE;
 		}
+		$resultado["allowed"] 	= $config['allowed_types'];
 		$resultado["documento"] = $cve_doc;
 
 		header('Content-Type', 'application/json');
