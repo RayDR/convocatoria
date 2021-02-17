@@ -71,7 +71,8 @@ class Convocatoria extends CI_Controller {
 
 			if ( $captcha->success ){
 				if ( ! is_null($curp) ){
-					$renapo = $this->_validar_curp( $curp );
+					$curp 	= strtoupper($curp);
+					$renapo 	= $this->_validar_curp( $curp );
 					if ( $renapo ){
 						$renapo = ( $renapo['exito'] )? $renapo : NULL;
 						$this->_crear_session( $curp, $renapo );
@@ -201,14 +202,16 @@ class Convocatoria extends CI_Controller {
 	}
 
 	private function _validar_curp($curp){
-		$renapo = FALSE;		
-		try {			
-			$this->load->library('Renapo');
-      		$renapo = $this->renapo->getCurp($curp);
-		} catch (Exception $e) {			
-			$renapo = FALSE;		
-		}
-
+		$renapo = TRUE;
+		if ( strlen($curp) > 18 ){
+			try {			
+				$this->load->library('Renapo');
+	      		$renapo = $this->renapo->getCurp($curp);
+			} catch (Exception $e) {			
+				$renapo = FALSE;		
+			}
+		} else
+			$renapo = FALSE;
 		return $renapo;
 	}
 

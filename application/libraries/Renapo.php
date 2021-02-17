@@ -34,7 +34,7 @@ class Renapo
                         $json_result['ws_exito']= $ws_array["@attributes"]['statusOper'];
                         $json_result['mensaje'] = $ws_array["@attributes"]['message'];
                         $json_result['error']   = $ws_array["@attributes"]['CodigoError'];
-                        $json_result['curp']    = $ws_array['CURP'];
+                        $json_result['curp']    = $ws_array['curp'];
                         $json_result['primer_apellido']     = $ws_array['apellido1'];
                         $json_result['segundo_apellido']    = $ws_array['apellido2'];
                         $json_result['nombre']              = $ws_array['nombres']; 

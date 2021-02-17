@@ -16,8 +16,8 @@ class Administrador extends CI_Controller {
 	/** *******************  VISTAS  ****************** **/
 
 	public function index(){
-		$this->session->sess_destroy();
-		$this->session->set_userdata( array('mAdmin' => TRUE) );
+		/*$this->session->sess_destroy();
+		$this->session->set_userdata( array('mAdmin' => TRUE) );*/
 		$data=array(
 			'tituloPagina'		=>	'ADMINISTRACIÓN',
 			'template'			=>	$this->template,
@@ -27,10 +27,10 @@ class Administrador extends CI_Controller {
 	}
 
 	public function panel_administrador(){
-		if ( $this->session->userdata('utipo') != 'Admin' ){
-			header("Location: ". base_url() . 'index.php/Convocatoria');
-			return;
-		}
+		// if ( $this->session->userdata('utipo') != 'Admin' ){
+		// 	header("Location: ". base_url() . 'index.php/Convocatoria');
+		// 	return;
+		// }
 
 		$data=array(
 			'tituloPagina'		=>	'ADMINISTRACIÓN',
