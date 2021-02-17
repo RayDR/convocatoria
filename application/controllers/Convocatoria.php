@@ -74,7 +74,10 @@ class Convocatoria extends CI_Controller {
 					$curp 	= strtoupper($curp);
 					$renapo 	= $this->_validar_curp( $curp );
 					if ( $renapo ){
-						$renapo = ( $renapo['exito'] )? $renapo : NULL;
+						if ( is_array($renapo) )
+							$renapo = ( $renapo['exito'] )? $renapo : NULL;
+						else 
+							$renapo = NULL;
 						$this->_crear_session( $curp, $renapo );
 						$resultado["exito"] = TRUE;
 						$resultado["mensaje"] = $renapo;
