@@ -116,7 +116,7 @@ class Convocatoria extends CI_Controller {
 
 		$config['upload_path']   = $path;
 		$config['allowed_types'] = 'pdf';
-		if ( $cve_doc == 'FAMA901501_FOTO_DIGITAL' )
+		if ( $cve_doc == 'FAMA901501_FOTO_DIGITAL' ||  $cve_doc == 'MORA901501_FOTO_DIGITAL' )
 			$config['allowed_types'] = 'jpg';
 		$config['max_size']      = ($cve_doc == 'DCPT')? 8192 : 2048;
 		$config['overwrite']     = TRUE;
