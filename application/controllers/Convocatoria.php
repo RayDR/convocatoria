@@ -203,7 +203,7 @@ class Convocatoria extends CI_Controller {
 
 	private function _validar_curp($curp){
 		$renapo = TRUE;
-		if ( strlen($curp) > 18 ){
+		if ( strlen($curp) == 18 ){
 			try {			
 				$this->load->library('Renapo');
 	      		$renapo = $this->renapo->getCurp($curp);
