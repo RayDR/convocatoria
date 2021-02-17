@@ -51,6 +51,7 @@ $(document).ready(function() {
 	ultima_seleccion = sedesSelect;
 	$("#sede").multiSelect('select', sedesSelect);
 	$("#sede").change(fn_seleccion_sede);
+	$(".datos").trigger('blur');
 });
 
 function fn_listado_doctos(){
